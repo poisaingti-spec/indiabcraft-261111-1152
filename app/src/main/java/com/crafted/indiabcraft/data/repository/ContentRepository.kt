@@ -4,6 +4,7 @@ import com.crafted.indiabcraft.data.model.Content
 import com.crafted.indiabcraft.data.model.ContentType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlin.random.Random
 
 class ContentRepository {
 
@@ -60,7 +61,7 @@ class ContentRepository {
                 type = if (i % 2 == 0) ContentType.MOVIE else ContentType.TV_SHOW,
                 year = 2024,
                 duration = if (i % 2 == 0) "2h ${i * 5}m" else "Season ${i}",
-                rating = (4.0f..5.0f).random(),
+                rating = Random.nextFloat() * 1.0f + 4.0f,
                 genres = listOf("Drama", "Thriller"),
                 cast = emptyList()
             )
@@ -81,7 +82,7 @@ class ContentRepository {
                 rating = 4.5f,
                 genres = listOf("Drama"),
                 cast = emptyList(),
-                progress = (0.1f..0.9f).random()
+                progress = Random.nextFloat() * 0.8f + 0.1f
             )
         }
     }
@@ -135,7 +136,7 @@ class ContentRepository {
                 type = ContentType.MOVIE,
                 year = 2024,
                 duration = "1h ${i * 10}m",
-                rating = (3.5f..5.0f).random(),
+                rating = Random.nextFloat() * 1.5f + 3.5f,
                 genres = listOf("Action"),
                 cast = emptyList()
             )
