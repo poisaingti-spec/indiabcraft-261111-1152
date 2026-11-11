@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">IndiabCraft</string>
+    <string name="home">Home</string>
+    <string name="live_tv">Live TV</string>
+    <string name="movies">Movies</string>
+    <string name="sports">Sports</string>
+    <string name="profile">Profile</string>
+    <string name="search">Search</string>
+    <string name="settings">Settings</string>
+    <string name="watch_now">Watch Now</string>
+    <string name="download">Download</string>
+    <string name="continue_watching">Continue Watching</string>
+    <string name="trending_now">Trending Now</string>
+    <string name="new_releases">New Releases</string>
+    <string name="live_channels">Live Channels</string>
+    <string name="sports_highlights">Sports Highlights</string>
+    <string name="see_all">See All</string>
+    <string name="logout">Logout</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="notifications">Notifications</string>
+    <string name="language">Language</string>
+    <string name="about">About</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="auto_play">Auto Play</string>
+    <string name="download_quality">Download Quality</string>
+    <string name="free_account">Free Account</string>
+    <string name="live">LIVE</string>
+</resources>
