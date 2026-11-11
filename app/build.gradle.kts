@@ -18,7 +18,7 @@ android {
         versionName = "1.0"
     }
     signingConfigs {
-        create("debug") {
+        create("release") {
             if (file("signing.keystore").exists()) {
                 storeFile = file("signing.keystore")
                 storePassword = "android"
@@ -30,6 +30,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
