@@ -1,5 +1,6 @@
 package com.crafted.indiabcraft.ui.movies
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.crafted.indiabcraft.theme.MaitisPurplePrimary
+import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -144,7 +146,7 @@ fun MovieRow(movieType: String) {
                 imageUrl = "https://via.placeholder.com/160x240",
                 title = "$movieType Movie $movie",
                 year = "2024",
-                rating = (4.0..5.0).random().toString().take(3)
+                rating = String.format("%.1f", Random.nextDouble(4.0, 5.0))
             )
         }
     }
