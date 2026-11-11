@@ -30,7 +30,7 @@ class IndiabCraftApplication : Application() {
             ).apply {
                 description = "Download progress notifications"
             }
-            
+
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
