@@ -121,23 +121,15 @@ fun ChannelCard(channel: Channel) {
                 imageVector = Icons.Default.LiveTv,
                 contentDescription = null,
                 tint = MaitisPurplePrimary,
-                modifier = Modifier.size(40.dp)
+                modifier = Modifier.size(32.dp)
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = channel.name,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.labelMedium,
                 color = MaitisPurplePrimary,
                 fontWeight = FontWeight.SemiBold
             )
-            if (channel.isLive) {
-                Spacer(modifier = Modifier.height(4.dp))
-                Badge(
-                    containerColor = Color.Red
-                ) {
-                    Text("LIVE", color = Color.White)
-                }
-            }
         }
     }
 }
