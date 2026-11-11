@@ -1,135 +1,111 @@
 package com.crafted.indiabcraft.ui.livetv
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LiveTv
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.crafted.indiabcraft.theme.MaitisPurplePrimary
+import com.crafted.indiabcraft.ui.components.ContentCard
+import com.crafted.indiabcraft.ui.models.ContentItem
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LiveTVScreen(
-    navController: NavController
+    onContentClick: (ContentItem) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var selectedCategory by remember { mutableStateOf("All") }
-    val categories = listOf("All", "Sports", "News", "Entertainment", "Kids", "Music")
     
+    val categories = listOf("All", "News", "Sports", "Entertainment", "Music", "Kids")
+    val liveChannels = listOf(
+        ContentItem(id = "1", title = "News Live", thumbnailUrl = "", category = "News"),
+        ContentItem(id = "2", title = "Sports HD", thumbnailUrl = "", category = "Sports"),
+        ContentItem(id = "3", title = "Movies Plus", thumbnailUrl = "", category = "Entertainment"),
+        ContentItem(id = "4", title = "Music TV", thumbnailUrl = "", category = "Music"),
+        ContentItem(id = "5", title = "Kids Zone", thumbnailUrl = "", category = "Kids"),
+        ContentItem(id = "6", title = "Documentary", thumbnailUrl = "", category = "Entertainment")
+    )
+
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Live TV",
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaitisPurplePrimary
-                )
-            )
-        }
+        modifier = modifier.fillMaxSize()
     ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .padding(16.dp)
         ) {
-            // Category Filter
+            Text(
+                text = "Live TV",
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+
+            // Category Selection Row
             LazyRow(
-                modifier = Modifier.padding(vertical = 12.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(horizontal = 0.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 items(categories) { category ->
-                    FilterChip(
-                        selected = selectedCategory == category,
-                        onClick = { selectedCategory = category },
-                        label = { Text(category) }
+                    CategoryChip(
+                        category = category,
+                        isSelected = selectedCategory == category,
+                        onClick = { selectedCategory = category }
                     )
                 }
             }
-            
-            // Channel Grid
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(minSize = 150.dp),
-                contentPadding = PaddingValues(16.dp),
+
+            // Live Channels Grid
+            Text(
+                text = "Live Channels",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.padding(top = 24.dp, bottom = 12.dp)
+            )
+
+            LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                contentPadding = PaddingValues(horizontal = 0.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
-                items(generateChannels()) { channel ->
-                    ChannelCard(channel = channel)
+                items(liveChannels) { channel ->
+                    ContentCard(
+                        contentItem = channel,
+                        onClick = { onContentClick(channel) },
+                        modifier = Modifier.padding(end = 4.dp)
+                    )
                 }
             }
         }
     }
 }
 
-data class Channel(
-    val id: String,
-    val name: String,
-    val category: String,
-    val isLive: Boolean = true
-)
-
-fun generateChannels(): List<Channel> {
-    return listOf(
-        Channel("1", "Sports 1", "Sports"),
-        Channel("2", "Sports 2", "Sports"),
-        Channel("3", "News 24", "News"),
-        Channel("4", "News Live", "News"),
-        Channel("5", "Movies HD", "Entertainment"),
-        Channel("6", "Cinema Plus", "Entertainment"),
-        Channel("7", "Kids TV", "Kids"),
-        Channel("8", "Cartoon Net", "Kids"),
-        Channel("9", "Music Hits", "Music"),
-        Channel("10", "MTV", "Music"),
-        Channel("11", "Cricket Live", "Sports"),
-        Channel("12", "Football TV", "Sports")
-    )
-}
-
 @Composable
-fun ChannelCard(channel: Channel) {
-    Box(
-        modifier = Modifier
-            .aspectRatio(16f / 10f)
-            .clip(RoundedCornerShape(12.dp))
-            .background(MaitisPurplePrimary.copy(alpha = 0.1f))
-            .clickable { },
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(12.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.LiveTv,
-                contentDescription = null,
-                tint = MaitisPurplePrimary,
-                modifier = Modifier.size(32.dp)
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = channel.name,
-                style = MaterialTheme.typography.labelMedium,
-                color = MaitisPurplePrimary,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
-    }
+private fun CategoryChip(
+    category: String,
+    isSelected: Boolean,
+    onClick: () -> Unit
+) {
+    androidx.compose.material3.FilterChip(
+        selected = isSelected,
+        onClick = onClick,
+        label = { Text(text = category) }
+    )
 }
