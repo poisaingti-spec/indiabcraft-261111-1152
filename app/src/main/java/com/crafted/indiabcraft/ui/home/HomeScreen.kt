@@ -22,6 +22,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.crafted.indiabcraft.navigation.Screen
 import com.crafted.indiabcraft.theme.MaitisPurplePrimary
+import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,14 +45,14 @@ fun HomeScreen(
                     containerColor = MaitisPurplePrimary
                 ),
                 actions = {
-                    IconButton(onClick = { /* Search */ }) {
+                    IconButton(onClick = { navController.navigate(Screen.Search.route) }) {
                         Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = "Search",
                             tint = Color.White
                         )
                     }
-                    IconButton(onClick = { /* Notifications */ }) {
+                    IconButton(onClick = { navController.navigate(Screen.Settings.route) }) {
                         Icon(
                             imageVector = Icons.Default.Notifications,
                             contentDescription = "Notifications",
@@ -71,25 +72,25 @@ fun HomeScreen(
                 )
                 NavigationBarItem(
                     selected = selectedTab == 1,
-                    onClick = { selectedTab = 1 },
+                    onClick = { selectedTab = 1; navController.navigate(Screen.LiveTV.route) },
                     icon = { Icon(Icons.Default.LiveTv, contentDescription = "Live TV") },
                     label = { Text("Live TV") }
                 )
                 NavigationBarItem(
                     selected = selectedTab == 2,
-                    onClick = { selectedTab = 2 },
+                    onClick = { selectedTab = 2; navController.navigate(Screen.Movies.route) },
                     icon = { Icon(Icons.Default.Movie, contentDescription = "Movies") },
                     label = { Text("Movies") }
                 )
                 NavigationBarItem(
                     selected = selectedTab == 3,
-                    onClick = { selectedTab = 3 },
+                    onClick = { selectedTab = 3; navController.navigate(Screen.Sports.route) },
                     icon = { Icon(Icons.Default.Sports, contentDescription = "Sports") },
                     label = { Text("Sports") }
                 )
                 NavigationBarItem(
                     selected = selectedTab == 4,
-                    onClick = { selectedTab = 4 },
+                    onClick = { selectedTab = 4; navController.navigate(Screen.Profile.route) },
                     icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
                     label = { Text("Profile") }
                 )
@@ -239,7 +240,7 @@ fun ContinueWatchingRow() {
             ContentCard(
                 imageUrl = "https://via.placeholder.com/160x240",
                 title = "Content $item",
-                progress = (0.3..0.9).random()
+                progress = Random.nextFloat() * 0.6f + 0.3f
             )
         }
     }

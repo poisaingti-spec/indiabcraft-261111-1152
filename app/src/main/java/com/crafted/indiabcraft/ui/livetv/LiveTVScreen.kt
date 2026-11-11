@@ -21,12 +21,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.crafted.indiabcraft.navigation.Screen
 import com.crafted.indiabcraft.ui.components.ContentCard
 import com.crafted.indiabcraft.ui.models.ContentItem
 
 @Composable
 fun LiveTVScreen(
-    onContentClick: (ContentItem) -> Unit,
+    navController: NavController,
     modifier: Modifier = Modifier
 ) {
     var selectedCategory by remember { mutableStateOf("All") }
@@ -88,7 +90,9 @@ fun LiveTVScreen(
                 items(liveChannels) { channel ->
                     ContentCard(
                         contentItem = channel,
-                        onClick = { onContentClick(channel) },
+                        onClick = { 
+                            navController.navigate(Screen.Detail.createRoute(channel.id))
+                        },
                         modifier = Modifier.padding(end = 4.dp)
                     )
                 }
